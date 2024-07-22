@@ -1,21 +1,24 @@
 import express from 'express';
 import cors from 'cors';
+import config from '../config/index.js';
 import { initializeDB } from '../dataBase/index.js';
-import routes from '../routes/index.js';
-
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
 
-// Inicializa la base de datos
-initializeDB().then(() => {
-  // Configura las rutas después de la inicialización de la base de datos
+const startServer = async (routes) => {
+  app.use(cors());
+  app.use(express.json());
   app.use(routes);
-});
-
-// Exporta la aplicación Express para el entorno serverless
-export default (req, res) => {
-  return app(req, res);
+  try {
+    await initializeDB();
+    const { port } = config();
+    app.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
+    });
+  } catch (error) {
+    console.error('Error starting the server:', error);
+  }
 };
+
+export default startServer;
