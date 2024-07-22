@@ -9,10 +9,8 @@ const startServer = async (routes) => {
   app.use(cors());
   app.use(express.json());
 
-  // Asignar rutas
-  routes.forEach(route => {
-    app.use(route.path, route.handler);
-  });
+
+    app.use(routes);
 
   app.get("/", (req, res) => {
     return res.status(200).json({
