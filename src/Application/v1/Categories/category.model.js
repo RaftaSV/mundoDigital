@@ -2,7 +2,7 @@ import  sequelize  from "sequelize";
 import { dataBaseConnection } from "../../../dataBase/index.js";
 
 
-const categoryModel = dataBaseConnection.define("Categories",{
+const categoryModel = dataBaseConnection.define("categories",{
     categoryId: {
         type: sequelize.INTEGER,
         primaryKey:true,

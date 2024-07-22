@@ -1,0 +1,209 @@
+{
+	"info": {
+		"_postman_id": "2baebea9-bf5d-4104-96cf-e7debf523bf6",
+		"name": "Mundo Digital",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14917719"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "getAllUsers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://mundodigital.onrender.com/v1/Users",
+							"protocol": "https",
+							"host": [
+								"mundodigital",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"v1",
+								"Users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "insertUsers",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullName\" : \"Rafael Antonio Gonzalez\",\r\n    \"address\": \"Nueva Concepcion, Chalatenango\",\r\n    \"email\": \"gp0555032019@unab.edu.sv\",\r\n    \"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://mundodigital.onrender.com/v1/Users",
+							"protocol": "https",
+							"host": [
+								"mundodigital",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"v1",
+								"Users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"gp0555032019@gmail.com\",\r\n    \"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://mundodigital.onrender.com/v1/Users/login",
+							"protocol": "https",
+							"host": [
+								"mundodigital",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"v1",
+								"Users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "getCategories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/v1/Categories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"Categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "insertCategories",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"categoryName\":\"Laptops\",\r\n    \"urlImage\":\"https://buketomnisportpweb.s3.us-east-2.amazonaws.com/products-images/O1PQyfsfT0v5VpQhJhhIMlWAJZdqAfc64XBgQ4bX.png\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://mundodigital.onrender.com/v1/Categories",
+							"protocol": "https",
+							"host": [
+								"mundodigital",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"v1",
+								"Categories"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "getProductsByCategoryID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://mundodigital.onrender.com/v1/products/1",
+							"protocol": "https",
+							"host": [
+								"mundodigital",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"v1",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "insertProducts",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"productName\": \"Dell Inspiron 3493\",\r\n  \"model\": \"INSP3493-15-1\",\r\n  \"urlImage\": \"https://www.impacto.com.pe/storage/products/16102127062.jpg\",\r\n  \"categoryId\": 1,\r\n  \"quantity\": 30,\r\n  \"price\": 749.99,\r\n  \"description\": \"El Dell Inspiron 3493 es un portátil de 15.6 pulgadas ideal para tareas diarias y multimedia. Equipado con un procesador Intel Core i5 de 10ª generación, 8 GB de RAM, y un disco duro SSD de 256 GB, ofrece un rendimiento fluido y rápido. La pantalla Full HD proporciona imágenes nítidas, mientras que la batería de larga duración asegura productividad durante todo el día. Incluye puertos USB 3.1, HDMI y un lector de tarjetas SD para conectividad versátil.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://mundodigital.onrender.com/v1/Products",
+							"protocol": "https",
+							"host": [
+								"mundodigital",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"v1",
+								"Products"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

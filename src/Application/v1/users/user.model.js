@@ -1,7 +1,7 @@
 import  sequelize  from "sequelize";
 import { dataBaseConnection } from "../../../dataBase/index.js";
 
-const userModel = dataBaseConnection.define("Users", {
+const userModel = dataBaseConnection.define("users", {
    
     userId: {
         type: sequelize.INTEGER,
@@ -13,7 +13,7 @@ const userModel = dataBaseConnection.define("Users", {
         type: sequelize.STRING
     },
     address: {
-        type: sequelize.STRING
+        type: sequelize.STRING 
     },
     email: {
         type: sequelize.STRING

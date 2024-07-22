@@ -19,20 +19,33 @@ export const insertUsers = async (req, res) => {
     try {
         const {
             fullName,
-            addres,
+            address,
             email,
             password
         } = req.body;
 
-        if(!fullName || !addres || !email || !password) {
+        if(!fullName || !address || !email || !password) {
           return res.status(401).json({
             message: "Faltan datos para la insercon del usuario"
           })
         }
 
+        const validateEmail = await userModel.findOne({
+          where: {
+            email,
+            status: 0
+          }
+        })
+
+        if (validateEmail){
+          return res.status(400).json({
+            message: 'el correo ya exta registrado'
+          })
+        }
+
         const newUser = {
             fullName,
-            addres,
+            address,
             email,
             userPassword : await encryptPass(password),
             status: 0

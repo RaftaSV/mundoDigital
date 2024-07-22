@@ -48,7 +48,7 @@ export const insertProduct = async (req, res) => {
 
         if (!category) {
             return res.status(400).json({
-                message: 'error ;a categoria no existe'
+                message: 'error la categoria no existe'
             })
         }
 
