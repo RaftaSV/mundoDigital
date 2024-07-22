@@ -80,15 +80,16 @@ app.get('/', (req,res) => {
     res.send(birds)
 })
 
-const PORT = 1111
-const initialServer = (routes) => {
-  app.listen(PORT, (error) => {
-    if (error){
-        console.log(error)
-        return
-    }
-    console.log("app runs on port", PORT)
-})
-}
 
-export default initialServer;
+export default (req, res) => {
+  // Use express middleware for handling requests
+  return new Promise((resolve, reject) => {
+      app(req, res, (err) => {
+          if (err) {
+              reject(err);
+          } else {
+              resolve();
+          }
+      });
+  });
+};
