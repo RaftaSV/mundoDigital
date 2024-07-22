@@ -1,7 +1,7 @@
 import  sequelize  from "sequelize";
 import { dataBaseConnection } from "../../../dataBase/index.js";
 
-const userModel = dataBaseConnection.define("users", {
+const userModel = dataBaseConnection.define("Users", {
    
     userId: {
         type: sequelize.INTEGER,
