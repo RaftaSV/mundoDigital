@@ -9,7 +9,11 @@ const app = express();
 const startServer = async (routes) => {
   app.use(cors());
   app.use(express.json());
-  app.use(routes);
+  app.get("/", (req, res) => {
+    return res.status(200).json({
+      data: 'hola'
+    })
+  });
   try {
     await initializeDB();
     const { port } = config();
