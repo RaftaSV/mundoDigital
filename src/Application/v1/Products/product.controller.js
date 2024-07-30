@@ -11,7 +11,10 @@ export const getProductByCategoryId = async (req, res) => {
             where: {
                 categoryId,
                 status: 0
-            }
+            },
+            include : [
+                categoryModel
+            ]
         })
 
         return res.status(200).json({
@@ -23,6 +26,24 @@ export const getProductByCategoryId = async (req, res) => {
         return res.status(500).json({
             message: 'Error obteniendo los productos'
         });
+    }
+}
+
+export const getProductById = async (req, res) => {
+    const {productId} = req.params;
+
+    try {
+
+        const data = await productsModel.findByPk(productId);
+
+        return res. status(200).json({
+            data
+        })
+         
+    } catch (error) {
+        return res.status(500).json({
+            message: 'error obteniendo el producto'
+        })
     }
 }
 

@@ -1,7 +1,7 @@
 
 import userModel from "./user.model.js";
 import {comparePass, encryptPass} from '../../../utils/cryptPass.js'
-import {genToken} from '../../../utils/Authentication.js'
+import {genToken, TokenValidation} from '../../../utils/Authentication.js'
 
 export const selectUser = async (req, res) => {
     try {
@@ -89,7 +89,7 @@ export const Login = async (req, res) => {
           });
       }
        // al mandar el usuario evitar enviar la contrasenia
-       user.user_password = undefined;
+       user.password = undefined;
       // se genera el json Web Token
       const token = genToken(user);
      
@@ -103,3 +103,21 @@ export const Login = async (req, res) => {
       });
     }
   };
+
+  
+export const validationToken = async (req, res) => {
+  const token = req.headers.authorization;
+  if (!token) {
+    return res.status(401).json({ message: 'No se proporcionó un token de autenticación.' });
+  }
+  try {
+    const validation = TokenValidation(token);
+    if (validation === true) {
+      return res.status(200).json({ message: 'El token es válido.' });
+    }
+  } catch (error) {
+    console.log(error)
+    return res.status(401).json({ message: 'El token es inválido.' });
+  }
+  return res.status(401).json({ message: 'El token es inválido.' });
+};
