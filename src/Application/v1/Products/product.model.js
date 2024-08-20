@@ -30,6 +30,9 @@ const productsModel = dataBaseConnection.define("products", {
     price : {
         type: sequelize.FLOAT
     },
+    cost: {
+        type: sequelize.FLOAT
+    },
     description: {
         type: sequelize.TEXT
     },
