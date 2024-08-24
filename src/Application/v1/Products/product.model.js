@@ -42,7 +42,7 @@ const productsModel = dataBaseConnection.define("products", {
 
 }, {
     timestamps: false
-})
+});
 
 productsModel.belongsTo(categoryModel,{
     foreignKey: 'categoryId'

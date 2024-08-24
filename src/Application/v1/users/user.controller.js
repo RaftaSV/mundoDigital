@@ -2,10 +2,15 @@
 import userModel from "./user.model.js";
 import {comparePass, encryptPass} from '../../../utils/cryptPass.js'
 import {genToken, TokenValidation} from '../../../utils/Authentication.js'
+import userTypeModel from "../UserTypes/userType.model.js";
 
 export const selectUser = async (req, res) => {
     try {
-        const users = await userModel.findAll();
+        const users = await userModel.findAll({
+          include: [
+            userTypeModel
+          ]
+        });
         res.json(users);
     } catch (error) {
         res.status(500).json({
@@ -21,10 +26,14 @@ export const insertUsers = async (req, res) => {
             fullName,
             address,
             email,
+            phoneNumber,
+            userTypeId,
             password
         } = req.body;
 
-        if(!fullName || !address || !email || !password) {
+        if(!fullName || !address || !email || !password ||
+          !phoneNumber || !userTypeId
+        ) {
           return res.status(401).json({
             message: "Faltan datos para la insercon del usuario"
           })
@@ -47,7 +56,9 @@ export const insertUsers = async (req, res) => {
             fullName,
             address,
             email,
+            phoneNumber,
             userPassword : await encryptPass(password),
+            userTypeId,
             status: 0
         }
 
@@ -73,6 +84,9 @@ export const Login = async (req, res) => {
       // Se verifica que el nombre de ususario este registrado en la base de datos
       const user = await userModel.findOne({
         where: { email, status: 0 },
+        include : [
+          userTypeModel
+        ]
           });
       if (!user) {
         return res.status(404)
