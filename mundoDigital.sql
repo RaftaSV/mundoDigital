@@ -10,7 +10,7 @@ use MundoDigital;
 CREATE TABLE typeUsers (
     typeId INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_type VARCHAR(50) NOT NULL,
-    status INT NOT NULL,
+    status INT NOT NULL
 );
 
 CREATE TABLE users (
@@ -28,7 +28,7 @@ CREATE TABLE categories (
     categoryId INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     categoryName VARCHAR(40) NOT NULL,
     urlImage VARCHAR(200),
-    status INT NOT NULL
+    status INT NOT NULL,
 );
 
 CREATE TABLE products (
