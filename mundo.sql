@@ -81,7 +81,7 @@ CREATE TABLE invoicesdetails (
 );
 
 -- Create the shoppingcart table with explicitly named foreign keys
-CREATE TABLE shoppingcart (
+CREATE TABLE shoppingcarts (
     cartId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     userId INT NOT NULL,
     productId INT NOT NULL,

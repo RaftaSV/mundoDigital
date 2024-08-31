@@ -3,7 +3,7 @@ import productsModel from "../Products/product.model.js";
 import userModel from "../users/user.model.js";
 import { dataBaseConnection } from "../../../dataBase/index.js";
 
-export const cartModel = dataBaseConnection.define("shoppingcart", {
+export const cartModel = dataBaseConnection.define("shoppingcarts", {
     cartId: {
         type: sequelize.INTEGER,
         primaryKey: true,

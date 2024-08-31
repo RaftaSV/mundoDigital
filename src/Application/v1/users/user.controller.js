@@ -3,6 +3,9 @@ import userModel from "./user.model.js";
 import {comparePass, encryptPass} from '../../../utils/cryptPass.js'
 import {genToken, TokenValidation} from '../../../utils/Authentication.js'
 import userTypeModel from "../UserTypes/userType.model.js";
+import { where } from "sequelize";
+import productsModel from "../Products/product.model.js";
+import cartModel from "../CartProduct/cart.model.js";
 
 export const selectUser = async (req, res) => {
     try {
@@ -106,12 +109,26 @@ export const Login = async (req, res) => {
        user.password = undefined;
       // se genera el json Web Token
       const token = genToken(user);
-     
+      const userId = (user.dataValues.userId);
+      const data = await cartModel.findAll({
+        where : {
+          userId,
+          cartStatus: 0
+        },
+        include : [
+          {
+          model: productsModel,
+          attributes: ['productId', 'productName', 'price', 'urlImage']
+          }
+        ]
+      })
+  
       return res.json({
         token,
-        user
+        data
       });
     } catch (err) {
+      console.log(err)
       return res.status(400).json({
         message: err.message,
       });

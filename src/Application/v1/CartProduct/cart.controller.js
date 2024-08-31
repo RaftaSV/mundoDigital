@@ -17,7 +17,10 @@ export const getCartByUser = async (req, res) => {
                 cartStatus: 0
             },
             include : [
-                productsModel
+                {
+                    model: productsModel,
+                    attributes: ['productId', 'productName', 'price', 'urlImage']
+                }
             ]
         })
 
