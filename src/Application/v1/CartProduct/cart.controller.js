@@ -52,8 +52,21 @@ export const insertCartUser = async (req, res) => {
 
         await cartModel.create(newCart);
 
+        const cartUser = await cartModel.findAll({
+            where: {
+                userId,
+                cartStatus: 0
+            },
+            include : [
+                {
+                    model: productsModel,
+                    attributes: ['productId', 'productName', 'price', 'urlImage']
+                }
+            ]
+        })
         res.status(200).json({
-            message: 'Agregado al carrito'
+            message: 'Agregado al carrito',
+            cartUser
         })
 } catch (error) {
     console.log(error);
@@ -70,15 +83,14 @@ export const deleteProductCart = async (req, res) => {
             cartId 
         } = req.params;
 
+    
         if (!cartId) {
             res.status(400).json({
                 message: 'fantan datos para eliminar el produco del carrito'
             })
         }
 
-        const cart = await cartModel.findByPk({
-            cartId
-        })
+        const cart = await cartModel.findByPk(cartId);
 
         if(!cart) {
             res.status(400).json({
@@ -88,9 +100,21 @@ export const deleteProductCart = async (req, res) => {
 
         cart.cartStatus = 1;
         await cart.save();
-
+        const cartUser = await cartModel.findAll({
+            where: {
+                userId: cart.dataValues.userId,
+                cartStatus: 0
+            },
+            include : [
+                {
+                    model: productsModel,
+                    attributes: ['productId', 'productName', 'price', 'urlImage']
+                }
+            ]
+        })
         res.status(200).json({
-            message:'El producto se elimino del carrito con exito'
+            message:'El producto se elimino del carrito con exito',
+            cartUser
         })
 
     } catch (error) {
