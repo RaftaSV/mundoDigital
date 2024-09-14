@@ -90,9 +90,18 @@ CREATE TABLE shoppingcarts (
     CONSTRAINT fk_shoppingcart_products FOREIGN KEY (productId) REFERENCES products(productId)
 );
 
+CREATE TABLE pageViews (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    pageUrl VARCHAR(255) NOT NULL,
+    pageTitle VARCHAR(255),
+    viewedAt DATETIME NOT NULL
+);
+
+
 -- Insert data into userstypes
 INSERT INTO userstypes (userType, userTypeStatus) VALUES ('admin', 0);
 INSERT INTO userstypes (userType, userTypeStatus) VALUES ('cliente', 0);
+
 
 -- Insert data into users
 INSERT INTO users (fullName, address, email, phoneNumber, userPassword, userTypeId, status) VALUES (

@@ -13,6 +13,11 @@ const config = () => ({
   },
   Token: {
     secret: process.env.SECRET
+  },
+  googleApi: {
+    email: process.env.client_email,
+    privateKey: process.env.private_key,
+    viewId: process.env.viewId 
   }
 });
 
