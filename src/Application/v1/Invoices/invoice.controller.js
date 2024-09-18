@@ -5,7 +5,8 @@ import sequelize  from 'sequelize';
 import cartModel from '../CartProduct/cart.model.js';
 import InvoiceDetailModel from '../detailsInvoice/detailinvoice.model.js'
 import { dataBaseConnection } from "../../../dataBase/index.js";
-import { getDate, getTime } from '../../../Utils/GetDate.js';
+import {getDate, getTime } from '../../../utils/GetDate.js'
+
 
 const mutex = new Mutex();
 

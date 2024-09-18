@@ -1,6 +1,6 @@
-import express, { Router } from 'express';
+import express from 'express';
 
-import { insertInvoice } from './invoice.controller.js';
+import { insertInvoice } from './invoice.Controller.js';
 
 const router = express.Router();
 
