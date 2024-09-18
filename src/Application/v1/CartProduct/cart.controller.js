@@ -19,7 +19,7 @@ export const getCartByUser = async (req, res) => {
             include : [
                 {
                     model: productsModel,
-                    attributes: ['productId', 'productName', 'price', 'urlImage']
+                    attributes: ['productId', 'productName', 'price','cost', 'urlImage']
                 }
             ]
         })
@@ -60,7 +60,7 @@ export const insertCartUser = async (req, res) => {
             include : [
                 {
                     model: productsModel,
-                    attributes: ['productId', 'productName', 'price', 'urlImage']
+                    attributes: ['productId', 'productName', 'price', 'cost','urlImage']
                 }
             ]
         })

@@ -30,7 +30,7 @@ export const getViewPage = async (req, res) => {
       requestBody: {
         dateRanges: [{ startDate: '2024-01-01', endDate: 'today' }],
         dimensions: [{ name: 'pagePath' }],
-        metrics: [{ name: 'eventCount' }],
+        metrics: [{ name: 'pageViews' }],
       }
     });
 
