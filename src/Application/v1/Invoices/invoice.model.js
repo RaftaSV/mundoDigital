@@ -1,5 +1,6 @@
 import sequelize from 'sequelize';
 import { dataBaseConnection } from "../../../dataBase/index.js";
+import userModel from '../users/user.model.js';
 
 const InvoiceModel = dataBaseConnection.define('Invoice', {
   invoiceId: {
@@ -47,6 +48,15 @@ const InvoiceModel = dataBaseConnection.define('Invoice', {
     }
   ],
   tableName: 'invoices', 
+});
+
+
+InvoiceModel.belongsTo(userModel, {
+  foreignKey: 'userId'
+});
+
+userModel.hasMany(InvoiceModel,{
+  foreignKey: 'userId' 
 });
 
 InvoiceModel.sync();

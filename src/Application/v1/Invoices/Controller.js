@@ -1,14 +1,80 @@
 import { Mutex }  from 'async-mutex';
 import InvoiceModel from './invoice.model.js';
 import productsModel from '../Products/product.model.js';
-import sequelize  from 'sequelize';
+import sequelize, { Op }  from 'sequelize';
 import cartModel from '../CartProduct/cart.model.js';
 import InvoiceDetailModel from '../detailsInvoice/detailinvoice.model.js'
 import { dataBaseConnection } from "../../../dataBase/index.js";
 import {getDate, getTime } from '../../../utils/GetDate.js'
+import userModel from '../users/user.model.js';
 
 
 const mutex = new Mutex();
+
+
+export const getInvoicesByDate = async (req, res) => {
+  try {
+    const { date } = req.params;
+    if (!date) {
+      return res.status(400).json({ message: 'Fecha es requerida en el formato YYYY-MM-DD.' });
+    }
+
+    const invoices = await InvoiceModel.findAll({
+      where: {
+        invoiceDate: {
+          [Op.eq]: date, 
+        },
+      },
+      include: [
+        {
+          model: userModel,
+          attributes: ['fullName', 'email','address'],
+        },
+        {
+          model: InvoiceDetailModel,
+          include: [
+            {
+              model: productsModel,
+              attributes: ['productName', 'price', 'urlImage'],
+            },
+          ],
+        },
+      ],
+      order: [['invoiceTime', 'ASC']], 
+    });
+
+
+    const formattedInvoices = invoices?.map((invoice) => ({
+      invoiceId: invoice.invoiceId,
+      date: invoice.invoiceDate,
+      time: invoice.invoiceTime,
+      client: invoice.user.fullName,
+      total: invoice.totalAmount,
+      details: invoice?.invoicesdetails?.map((detail) => ({
+        product: detail.product.productName,
+        img: detail.product.urlImage,
+        quantity: detail.cant,
+        unitPrice: detail.unitPrice,
+        unitCost: detail.unitCost,
+        totalAmount: detail.totalAmount,
+      })),
+    }));
+
+
+    invoices?.forEach(detail => {
+      detail.invoicedetails?.forEach(details=>{
+        console.log(details)
+      })
+   });
+
+    res.status(200).json({ invoices: formattedInvoices });
+  } catch (error) {
+    console.error('Error al obtener las facturas:', error);
+    res.status(500).json({ message: 'Error al obtener las facturas.' });
+  }
+}
+
+
 
 export const insertInvoice = async (req, res) => {
     const transaction = await dataBaseConnection.transaction();

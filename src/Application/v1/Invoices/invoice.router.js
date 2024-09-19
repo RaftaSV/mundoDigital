@@ -1,9 +1,10 @@
 import express from 'express';
 
-import { insertInvoice } from './Controller.js';
+import { insertInvoice, getInvoicesByDate } from './Controller.js';
 
 const router = express.Router();
 
+router.get('/:date', getInvoicesByDate);
 router.post('/', insertInvoice);
 
 export default router;
