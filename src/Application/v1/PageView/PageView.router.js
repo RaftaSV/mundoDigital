@@ -6,7 +6,7 @@ insertPageView
 const router = express.Router();
 
 
-router.get('/', getPageViews);
+router.get('/:date', getPageViews);
 router.post('/', insertPageView);
 
 export default router;

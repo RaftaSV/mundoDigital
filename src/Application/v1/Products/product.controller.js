@@ -1,4 +1,7 @@
+import { col, fn } from "sequelize";
 import categoryModel from "../Categories/category.model.js";
+import InvoiceDetailModel from "../detailsInvoice/detailinvoice.model.js";
+import InvoiceModel from "../Invoices/invoice.model.js";
 import productsModel from "./product.model.js";
 
 export const getProductByCategoryId = async (req, res) => {
@@ -188,6 +191,63 @@ export const deleteProduct = async (req, res) => {
         console.log(error)
         res.status(500).json({
             message: `Error eliminando el producto ${error.message}`
+        })
+    }
+}
+
+
+export const getProductInformation = async (req, res) =>{
+    try {
+        const {date} = req.params;
+
+        const totalProductsSale = await InvoiceDetailModel.findAll({
+            where: {
+                invoiceDetailStatus: 0
+            },
+            include: [
+                {
+                    model: InvoiceModel,
+                    where: {
+                        invoiceDate: date
+                    },
+                    attributes: [] // No necesitamos atributos adicionales del InvoiceModel para la suma.
+                },
+                {
+                    model: productsModel,
+                    attributes: ['productName'] // Incluimos solo el nombre del producto.
+                }
+            ],
+            attributes: [
+                'productId',
+                [fn('SUM', col('cant')), 'cant'] // Suma la cantidad de productos vendidos.
+            ],
+            group: ['productId'], // Agrupamos por 'productId'.
+            order: [[fn('SUM', col('cant')), 'DESC']], // Opcional: Ordenar por cantidad de productos vendidos (de mayor a menor).
+            limit: 10 // Limitamos a 10 resultados.
+        });
+
+        let totalHistoryProductsSale = await InvoiceDetailModel.findAll({
+            where: {
+                invoiceDetailStatus: 0
+            },
+            attributes: [
+                [fn('SUM', col('cant')), 'cant'] 
+            ],
+            raw: true,
+        });
+    
+        totalHistoryProductsSale = totalHistoryProductsSale[0].cant
+      
+        res.status(200).json({
+            totalProductsSale,
+            totalHistoryProductsSale
+        })
+    
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: `Error obteniendo los datos de los productos, ${error}`
         })
     }
 }
